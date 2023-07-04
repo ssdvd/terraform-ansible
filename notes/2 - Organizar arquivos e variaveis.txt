@@ -7,3 +7,26 @@ pasta com seus respectivos arquivos e chaves.
 
 Utilizando variaveis:
 
+para criarmos as variaveis, criamos um arquivo chamado variables.tf
+onde iremos declarar o nome e o tipo da variavel, se for string, int e etc
+tambem podemos descrever cada uma delas utilizando comentarios.
+
+utilizando variaveis 2:
+
+apos chamarmos o modulo diretamente da pasta de infra
+definirmos os valores das variaveis no arquivo main.tf de cada ambiente
+e definimos o caminho da pasta de infra com o main.tf principal.
+
+module "aws-dev" {
+  source = "../../infra"        |caminho
+  instancia = "t2.micro"        |tipo de instancia
+  regiao_aws = "us-east-1"      |regiao da aws
+  chave = "iac-dev"             |chave 
+}
+
+
+Caso nao tenhamos iniciado o terraform com o terraform init
+na pasta infra, executamos o comando la e em seguida no ambiente
+desejado, dev ou prod. Com isso ja podemos verificar o planejamento
+com o comando terraform plan para verificar o que vai acontecer,
+valindando isso podemos dar o terraform apply.
