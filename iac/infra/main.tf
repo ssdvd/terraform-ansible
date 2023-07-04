@@ -32,4 +32,9 @@ resource "aws_instance" "app_server" {
     tags = {
         name = "Terraform Ansible Python"
     }
+
+resource "aws_key_pair" "ChaveSSH"{
+    key_name = DEV
+    public_key = file("iac-dev.pub")
+    }
 }

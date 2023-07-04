@@ -1,0 +1,26 @@
+Criando uma chave SSH:
+
+para criar uma chave SSH, devemos utilizar o seguinte comando
+
+ssh-keygen
+
+nesse comando ira perguntar em qual local e qual o nome da chave, assim
+que preencher essas informacoes, continuamos o procedimento ate a finalizacao
+do comando. Assim que finalizado o comando dois arquivos serao criados
+a chave privada e a publica.
+
+Configurando a chave SSH:
+
+para vincularmos uma chave gerada atraves do ssh-keygen, devemos criar
+com o terraform um novo recurso, com o comando:
+
+resource "aws_key_pair" "ChaveSSH"{
+    key_name = DEV
+    public_key = file("iac-dev.pub")
+    }
+
+recurso conhecido como aws_key_pair e com o nome ChaveSSH, dentro desse
+recurso dois parametros sao obrigatorios o key_name e public_key. E 
+para uma boa pratica e recomendado que no parametro public_key se deva
+passar o arquivo em vez da string contendo a chave, ficando assim 
+mais seguro.

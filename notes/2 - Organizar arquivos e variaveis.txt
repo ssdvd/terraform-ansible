@@ -1,0 +1,9 @@
+Organizando arquivos:
+
+para organizar os arquivos, criamos as pastas com seus devidos objetivos
+para o ambiente de dev, foi criado uma pasta, assim como para o ambiente
+de prod, tambem foi criada uma pasta para a infra somente. Tendo assim cada 
+pasta com seus respectivos arquivos e chaves.
+
+Utilizando variaveis:
+
