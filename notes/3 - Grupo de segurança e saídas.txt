@@ -1,0 +1,64 @@
+para criarmos nossas regras de acesso temos que criamos os
+grupos de segurança e para fazer isso podemos criar um
+novo arquivo chamado sg.tf para definirmos as regras por la 
+e com o seguinte codigo:
+
+resource "aws_security_group" "acesso_geral"{
+    name ="acesso_geral" | NOME DO GRUPO
+    description = "grupo do Dev" | DESCRIÇÃO
+    ingress{
+        REGRAS DE ENTRADA
+    }
+    engress{
+        REGRAS DE SAIDA
+    }
+    tags = {
+        Name = "acesso_geral" | TAG DO RECURSO
+    }
+}
+
+a sintaxe basicamente é essa e com isso podemos começar
+a definir as nossas regras.
+
+e as regras são as seguintes:
+
+cidr_blocks = ["0.0.0.0/0"] | os 0s libera para to faixa de ipv4
+        ipv6_cidr_blocks = ["::/0"] | libera para to faixa de ipv6
+        from_port = 0 | o 0 representa todas as portas
+        to_port = 0 | o 0 representa todas as portas
+        protocol = "-1" | o -1 representa todos os protocolos
+
+tanto na entrada quanto na saida, como se trata de um
+ambiente de dev, podemos deixar dessa forma. se fosse 
+um ambiente de produção colocariamos somente o essencial
+ex o protocolo SSH com apenas a porta 22 aberta e por ai vincularmos
+
+Com esse comando no main.tf da infra:
+
+output "IP_publico" {
+    value = aws_instance.app_server.public_ip
+}
+Lembre de trocar o “app_server” pelo nome do recurso do
+Terraform que corresponde a sua instância. Então, caso 
+a sua instância tenha outro nome, use o padrão
+aws_instance.NOME_DA_INSTANCIA.public_ip.
+
+e esse outro no main.tf do ambiente dev ou prod
+
+output "IP" {
+  value = module.aws-dev.IP_publico
+}
+
+servirá para trazer o ip da instancia recem criado pelo
+terraform, sem ter que acessar o painel da aws.
+
+onde não podemos repetir o nome do recurso para não 
+haver conflitos, por isso o nome está diferente. No output
+do main.tf da infra, estamos buscando a informação dos recursos
+aws_instance.app_server e o valor que queremos é o public_ip.
+E no main.tf dos ambientes estamos utilizando do module
+para puxar essa informação direto do main.tf da infra.
+
+
+
+
