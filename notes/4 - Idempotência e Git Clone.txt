@@ -1,0 +1,34 @@
+Idempotência, motando condicionais:
+
+para dar seguimento no aprendizado do ansible e do playbook
+desenvolvido no decorrer das aulas, temos que primeiro
+atualizar o ip do arquivo host.yml e para isso, podemos
+utilizar do comando 
+
+terraform output
+
+o comando irá printar novamente o ultimo output realizado
+e como solicitamos que o output fosse o IP do novo host
+será o mesmo que ira printar para podermos atualizar o 
+arquivo.
+
+Feito isso, já podemos voltar para o playbook mas, antes 
+devemos adicionar uma condicional no playbook, ja que 
+estamos executando um comando shell no qual ativa o 
+env virtual do django e como sabemos, todos os comandos
+shell dentro de um playbook serão executados todas as vezes
+que rodarmos o playbook. E para isso devemos criar um nova 
+task que faz a verificação se já existe o arquivo e se
+existir, irá skipar a tarefa que inicia o ambiente.
+
+  - name: Verifica se o projeto já existe
+    stat: | VERIFICA O ESTADO DO ITEM
+      path: /home/ubuntu/tcc/setup/settings.py | CAMINHO DO ITEM
+    register: projeto | VARIAVEL QUE GUARDA A VERIFICAÇÃO
+
+  - name: Iniciando o projeto
+    shell: '. /home/ubuntu/tcc/venv/bin/activate; django-admin startproject setup /home/ubuntu/tcc/'
+    when: not projeto.stat.exists | VERIFICA SE NA VARIAVEL PROJETO DIZ SE O CAMINHO JA EXISTE E SE EXISTIR ELA SKIPA A TASK 
+
+
+
