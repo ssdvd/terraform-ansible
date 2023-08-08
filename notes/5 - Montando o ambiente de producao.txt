@@ -46,6 +46,23 @@ para que a aplicacao consiga funcionar corretamente.
 e como nesse caso especifico nao precisamos verificar se 
 os dados ja foram carregados e migrados, tambem nao temos
 que nos preocupar se os dados ja existentes serao substituidos
-por conta das tasks.
+por conta das tasks. Pois os comandos migrate e loaddata do python
+ja sao idempotentes
+
+Iniciando o servidor:
+
+e para iniciar o nosso servidor de nossa api clonoda, inserimos
+o seguinte bloco:
+
+  - name: iniciando o servidor
+    shell: '. /home/ubuntu/tcc/venv/bin/activate; nohup python /home/ubuntu/tcc/manage.py runserver 0.0.0.0/8000 &' 
+
+esse bloco ira iniciar nossa venv, e com o comando nohup
+iremos iniciar nosso servidor com o comando pyhton runserver
+defindo que a origem de acesso possa ser de qualquer lugar 
+utilizando o 0.0.0.0 para isso, e a porta que dara o acesso 
+sera a 8000 e no final o &, para manter nosso servidor rodando
+mesmo apos a finalizacao do script.
+
 
 
