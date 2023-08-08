@@ -1,6 +1,6 @@
 resource "aws_security_group" "acesso_geral"{
-    name ="acesso_geral"
-    description = "grupo do Dev"
+    name ="acesso_geral_${var.env}"
+    description = "grupo ${var.env}"
     ingress{
         cidr_blocks = ["0.0.0.0/0"]
         ipv6_cidr_blocks = ["::/0"]
@@ -16,6 +16,6 @@ resource "aws_security_group" "acesso_geral"{
         protocol = "-1"
     }
     tags = {
-        Name = "acesso_geral"
+        Name = "acesso_geral_${var.env}"
     }
 }
