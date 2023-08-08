@@ -21,6 +21,7 @@ resource "aws_instance" "app_server" {
     ami             = "ami-024e6efaf93d85776"
     instance_type   = var.instancia
     key_name = var.chave
+    security_groups = [aws_security_group.acesso_geral.name]
     tags = {
         name = "Terraform Ansible Python"
     }
