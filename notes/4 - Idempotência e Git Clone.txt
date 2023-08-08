@@ -30,5 +30,23 @@ existir, irá skipar a tarefa que inicia o ambiente.
     shell: '. /home/ubuntu/tcc/venv/bin/activate; django-admin startproject setup /home/ubuntu/tcc/'
     when: not projeto.stat.exists | VERIFICA SE NA VARIAVEL PROJETO DIZ SE O CAMINHO JA EXISTE E SE EXISTIR ELA SKIPA A TASK 
 
+Git clone:
+
+agora para clonar um repo dentro da instancia provisionada atraves
+do terraform, temos que adiconar o seguinte bloco de comandos no
+playbook do ambiente:
+
+  - name: Git Clone | nome da task
+    ansible.builtin.git: | comando nativo do ansible para clonar repos
+      repo: https://github.com/alura-cursos/clientes-leo-api.git | caminho do repo
+      dest: /home/ubuntu/tcc | onde vai ser copia ira ficar
+      version: master | branch desejada 
+
+e recomendado o bloco ficar antes de iniciar algum ambiente virtual
+dentro da instancia, essa tarefa ira clocar um repo do github para
+o nosso host, alem de selecionar o caminho de onde fica a copia
+tambem selecionamos a branch desejada.
+
+
 
 

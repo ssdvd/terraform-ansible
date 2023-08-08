@@ -1,0 +1,51 @@
+Modificando o pip:
+
+Na task git clone, tivemos que adicionar o parametro force, para 
+sempre manter o repo sincronizado com o github 
+
+  - name: Git Clone
+    ansible.builtin.git:
+      repo: https://github.com/alura-cursos/clientes-leo-api.git
+      dest: /home/ubuntu/tcc
+      version: master
+      force: yes | manter o repo atualizado
+
+e a modificacao na task instalando dependencias com pip:
+
+  - name: Instalando dependencias com pip (django e django rest)
+    pip:
+      virtualenv: /home/ubuntu/tcc/venv
+#     UTILIZADO PARA INSTALAR AS DEPENDECIAS MANUAL
+#      name:
+#        - django
+#        - djangorestframework
+      requirements: /home/ubuntu/tcc/requirements.txt | arquivos com todos as dependencias do projeto
+
+comentamos as linha onde colocavamos as dependencias manualmente
+e substituimos para um arquivo chamado requirements e dentro dele 
+contem o nome de todas as dependencias do projeto, e com o parametro
+requirements: podemos indicar o arquivo requirements.txt para puxar
+todas as dependencias automaticamente.
+
+Carregando o banco de dados do app clonado:
+
+e para carregarmos os dados do app clonado devemos inserir as
+seguintes tasks:
+
+  - name: configurando o banco de dados do app
+    shell: '. /home/ubuntu/tcc/venv/bin/activate; python /home/ubuntu/tcc/manage.py migrate'
+
+essa task ira ativar o venv e executara o comando migrate do
+python, assim migrando toda a estrutura das tabelas dos apps
+
+  - name: carregando os dados iniciais
+    shell: '. /home/ubuntu/tcc/venv/bin/activate; python /home/ubuntu/tcc/manage.py loaddata clientes.json'
+
+essa task ira inputar os dados iniciais e essenciais,
+para que a aplicacao consiga funcionar corretamente.
+e como nesse caso especifico nao precisamos verificar se 
+os dados ja foram carregados e migrados, tambem nao temos
+que nos preocupar se os dados ja existentes serao substituidos
+por conta das tasks.
+
+
